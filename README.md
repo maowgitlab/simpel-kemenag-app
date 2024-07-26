@@ -1,3 +1,105 @@
+# Tentang project
+Ini adalah website yang saya buat untuk penelitian skripsi saya. Website ini dirancang untuk mendukung berbagai kegiatan dan kebutuhan informasi di lingkungan Kementerian Agama Kalimantan Selatan. Melalui website ini, pengguna dapat mengakses Media Elektronik terupdate, serta beragam konten terkait lainnya dengan mudah dan cepat.
+
+
+## Fitur
+- Halaman Utama [Pencarian, Pengkategorian, Layanan Publik]
+- Autentikasi [Multiuser, Login, Verifikasi]
+- Dashboard [Management: Media, User, Kategori, Tagar, Komentar, Pelayanan, Report(Admin)]
+- Integrasi layanan Email dan Telegram Channel
+
+## Sistem Requirement
+- Window 10 keatatas / Linux / MacOS
+- PHP 8.1+
+- XAMPP / Laragon / Lainnya (untuk server)
+- Terinstall Composer
+- Browser (disarankan Firefox)
+
+
+## Instalasi dan konfigurasi
+
+Clone project dari repositori
+
+```bash
+https://github.com/maowgitlab/simpel-kemenag-app.git
+```
+
+Buka project dan terminal lalu install dependensi yang dibutuhkan
+
+```bash
+composer install
+```
+
+buat file baru / copy file ```.env.example``` menjadi ```.env``` diterminal
+
+```bash
+cp .env.example .env
+```
+
+
+generate key baru
+```bash
+php artisan key:gen
+```
+
+
+pada file ```.env``` yang sudah dibuat rubah settingan database sebelumnya ```mysql``` menjadi ```sqlite```
+```bash
+DB_CONNECTION=sqlite
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=laravel
+# DB_USERNAME=root
+# DB_PASSWORD=
+```
+
+pada file ```.env``` yang sudah dibuat tambahkan settingan untuk ```SMTP Email``` lalu sesuaikan dengan config yang kamu punya bisa gunakan https://mailtrap.io/ 
+```bash
+MAIL_MAILER=TODO
+MAIL_HOST=TODO
+MAIL_PORT=TODO
+MAIL_USERNAME=TODO
+MAIL_PASSWORD=TODO
+MAIL_ENCRYPTION=TODO
+MAIL_FROM_ADDRESS="TODO@gmail.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+pada file ```.env``` yang sudah dibuat tambahkan settingan untuk ```Telegram Token & Channel Username``` lalu sesuaikan dengan config yang kamu punya, dapatkan disini https://telegram.me/BotFather
+```bash
+TELEGRAM_TOKEN=TODO
+TELEGRAM_CHANNEL=TODO
+```
+
+pada file ```.env``` yang sudah dibuat tambahkan settingan untuk ```Google reCaptcha``` lalu sesuaikan dengan config yang kamu punya, dapatkan disini https://www.google.com/recaptcha/admin?hl=id
+```bash
+NOCAPTCHA_SITEKEY=TODO
+NOCAPTCHA_SECRET=TODO
+```
+
+Setelah selesai Instalasi dan konfigurasi, buat file baru didalam folder ```database``` dengan nama ```database.sqlite``` lalu lakukan migrasi dan seeding database diterminal
+```bash
+php artisan migrate:fresh --seed
+```
+
+Link folder storage ke folder publik dengan cara
+```bash
+php artisan storage:link
+```
+
+Jalankan lokal server diterminal dengan perintah
+```bash
+php artisan serve
+```
+
+login menggunakan Username dan Password
+```bash
+http://127.0.0.1:8000/auth
+username: admin
+password: 12345
+```
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
