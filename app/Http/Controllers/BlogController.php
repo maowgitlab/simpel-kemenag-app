@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
-use App\Models\Media;
-use App\Models\Comment;
-use App\Models\Service;
-use App\Models\Category;
 use App\Mail\ApplicantMail;
+use App\Models\Category;
+use App\Models\Comment;
 use App\Models\ListService;
+use App\Models\Media;
+use App\Models\Service;
+use App\Models\ServiceApplicant;
+use App\Models\Tag;
 use Faker\Factory as Faker;
 use Illuminate\Http\Request;
-use App\Models\ServiceApplicant;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Mail;
 
 class BlogController extends Controller
 {
@@ -88,7 +88,7 @@ class BlogController extends Controller
             } elseif ($search) {
                 $medias = $mediasQuery->where('judul', 'LIKE', "%{$search}%")->paginate(5)->withQueryString();
             } else {
-                $medias = $mediasQuery->take(7)->get(); 
+                $medias = $mediasQuery->take(7)->get();
             }
         }
 
@@ -109,9 +109,9 @@ class BlogController extends Controller
         $trendingCategoriesOne = $this->category->select('id', 'nama_kategori', 'slug')->with(['medias' => function ($query) {
             $query->select('user_id', 'category_id', 'judul', 'slug', 'gambar', 'konten', 'created_at', 'jumlah_dibaca')->orderByDesc('jumlah_dibaca')->limit(10);
         }])
-        ->withCount('medias')
-        ->orderByDesc('medias_count')
-        ->first();
+            ->withCount('medias')
+            ->orderByDesc('medias_count')
+            ->first();
 
         $popularMedias = $this->media->select('id', 'category_id', 'judul', 'slug', 'created_at')->with(['category'])
             ->whereDate('created_at', '>=', now()->subMonth())
@@ -264,7 +264,7 @@ class BlogController extends Controller
         ], [
             'komentar.required' => 'Komentar wajib diisi',
             'g-recaptcha-response.required' => 'Captcha dibutuhkan.',
-            'g-recaptcha-response.captcha' => 'Validasi Captcha Gagal, Silahkan coba lagi.'
+            'g-recaptcha-response.captcha' => 'Validasi Captcha Gagal, Silahkan coba lagi.',
         ]);
         $this->comment->create($data);
         return back()->with('message', $this->generateSuccessMessage('Komentar berhasil dikirim.'));

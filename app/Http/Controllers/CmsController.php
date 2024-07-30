@@ -233,7 +233,7 @@ class CmsController extends Controller
         return view('cms.pages.dashboard', [
             'recentActivities' => $this->media->select('user_id', 'konten', 'judul', 'created_at', 'gambar')->with('user')->latest()->take(8)->get(),
             'popularMedias' => $this->media->select('judul', 'jumlah_dibaca')->take(5)->where('jumlah_dibaca', '>=', 2)->get(),
-            'popularCategories' => $this->category->select('nama_kategori')->withCount('medias')->where('jumlah_dibaca', '>=', 2)->latest()->take(5)->get(),
+            'popularCategories' => $this->category->select('nama_kategori')->withCount('medias')->where('medias_count', '>=', 2)->latest()->take(5)->get(),
             // 'totalMedias' => $this->media->count(),
             'totalCategories' => $this->category->count(),
             'totalUsers' => $this->user->count(),
