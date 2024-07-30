@@ -108,7 +108,10 @@ class BlogController extends Controller
 
         $trendingCategoriesOne = $this->category->select('id', 'nama_kategori', 'slug')->with(['medias' => function ($query) {
             $query->select('user_id', 'category_id', 'judul', 'slug', 'gambar', 'konten', 'created_at', 'jumlah_dibaca')->orderByDesc('jumlah_dibaca')->limit(10);
-        }])->orderByDesc('jumlah_dibaca')->first();
+        }])
+        ->withCount('medias')
+        ->orderByDesc('medias_count')
+        ->first();
 
         $popularMedias = $this->media->select('id', 'category_id', 'judul', 'slug', 'created_at')->with(['category'])
             ->whereDate('created_at', '>=', now()->subMonth())
