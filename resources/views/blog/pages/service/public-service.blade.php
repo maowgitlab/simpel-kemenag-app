@@ -1,5 +1,5 @@
 @if (session()->has('message'))
-  {!! session('message') !!}
+{!! session('message') !!}
 @endif
 <div class="col-md-9">
   <h3 class="category-title">Pelayanan Publik</h3>
@@ -26,55 +26,54 @@
           <label for="email_status" class="col-sm-2 col-form-label">Email</label>
           <div class="col-sm-10">
             <div class="input-group">
-              <input type="email" name="email_status"
-                class="form-control @error('email_status')
+              <input type="email" name="email_status" class="form-control @error('email_status')
                   is-invalid
-                @enderror"
-                id="email_status" autocomplete="off" placeholder="Masukkan Email Valid"
+                @enderror" id="email_status" autocomplete="off" placeholder="Masukkan Email Valid"
                 value="{{ session()->has('serviceApplicants') ? session('serviceApplicants')[0]->email : '' }}">
-              <button type="submit" class="btn btn-outline-secondary input-group-text" id="buttonStatus"><i class="bi bi-send"></i>
+              <button type="submit" class="btn btn-outline-secondary input-group-text" id="buttonStatus"><i
+                  class="bi bi-send"></i>
                 Kirim</button>
               @error('email_status')
-                <div class="invalid-feedback">
-                  {{ $message }}
-                </div>
+              <div class="invalid-feedback">
+                {{ $message }}
+              </div>
               @enderror
             </div>
           </div>
         </div>
       </form>
       @if (session()->has('serviceApplicants') && session('serviceApplicants')->isNotEmpty())
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Kode Layanan</th>
-                <th>Kategori Layanan</th>
-                <th>Layanan</th>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              @foreach (session('serviceApplicants') as $serviceApplicant)
-                <tr>
-                  <td>{{ $loop->iteration }}</td>
-                  <td><a href="#" class="hover-title" id="detail_permohonan" data-bs-toggle="modal"
-                      data-bs-target="#staticBackdrop"
-                      data-kode="{{ $serviceApplicant->kode_layanan }}"><u>{{ $serviceApplicant->kode_layanan }}</u></a>
-                  </td>
-                  <td>{{ $serviceApplicant->list->judul }}</td>
-                  <td>{{ $serviceApplicant->service->judul }}</td>
-                  <td>{{ $serviceApplicant->nama }}</td>
-                  <td>{{ $serviceApplicant->email }}</td>
-                  <td>{{ $serviceApplicant->status }}</td>
-                </tr>
-              @endforeach
-            </tbody>
-          </table>
-        </div>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Kode Layanan</th>
+              <th>Kategori Layanan</th>
+              <th>Layanan</th>
+              <th>Nama</th>
+              <th>Email</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach (session('serviceApplicants') as $serviceApplicant)
+            <tr>
+              <td>{{ $loop->iteration }}</td>
+              <td><a href="#" class="hover-title" id="detail_permohonan" data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop" data-kode="{{ $serviceApplicant->kode_layanan }}"><u>{{
+                    $serviceApplicant->kode_layanan }}</u></a>
+              </td>
+              <td>{{ $serviceApplicant->list->judul }}</td>
+              <td>{{ $serviceApplicant->service->judul }}</td>
+              <td>{{ $serviceApplicant->nama }}</td>
+              <td>{{ $serviceApplicant->email }}</td>
+              <td>{{ $serviceApplicant->status }}</td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
       @endif
     </div>
   </div>
@@ -90,33 +89,31 @@
             <label for="kategori_layanan" class="form-label fw-bold">Kategori Layanan</label>
             <select class="form-select @error('kategori_layanan')
               is-invalid
-            @enderror"
-              id="kategori_layanan" name="kategori_layanan" data-old="{{ old('kategori_layanan') }}">
+            @enderror" id="kategori_layanan" name="kategori_layanan" data-old="{{ old('kategori_layanan') }}">
               <option selected disabled>Pilih Kategori Layanan</option>
               @foreach ($listServices as $listService)
-                <option value="{{ $listService->id }}"
-                  {{ old('kategori_layanan') == $listService->id ? 'selected' : '' }}>{{ $listService->judul }}
-                </option>
+              <option value="{{ $listService->id }}" {{ old('kategori_layanan')==$listService->id ? 'selected' : ''
+                }}>{{ $listService->judul }}
+              </option>
               @endforeach
             </select>
             @error('kategori_layanan')
-              <div class="invalid-feedback">
-                {{ $message }}
-              </div>
+            <div class="invalid-feedback">
+              {{ $message }}
+            </div>
             @enderror
           </div>
           <div class="col-md-6">
             <label for="layanan" class="form-label fw-bold">Layanan</label>
             <select class="form-select @error('layanan')
               is-invalid
-            @enderror" id="layanan"
-              name="layanan" data-old="{{ old('layanan') }}" data-placeholder="Pilih Layanan">
+            @enderror" id="layanan" name="layanan" data-old="{{ old('layanan') }}" data-placeholder="Pilih Layanan">
               <option selected disabled>Pilih Layanan</option>
             </select>
             @error('layanan')
-              <div class="invalid-feedback">
-                {{ $message }}
-              </div>
+            <div class="invalid-feedback">
+              {{ $message }}
+            </div>
             @enderror
           </div>
         </div>
@@ -137,45 +134,42 @@
           <label for="nama" class="form-label fw-bold">Nama</label>
           <input type="text" class="form-control @error('nama')
             is-invalid
-          @enderror"
-            id="nama" name="nama" value="{{ old('nama') }}">
+          @enderror" id="nama" name="nama" value="{{ old('nama') }}">
           @error('nama')
-            <div class="invalid-feedback">
-              {{ $message }}
-            </div>
+          <div class="invalid-feedback">
+            {{ $message }}
+          </div>
           @enderror
         </div>
         <div class="mb-3">
           <label for="email" class="form-label fw-bold">Email</label>
           <input type="email" class="form-control @error('email')
             is-invalid
-          @enderror"
-            id="email" name="email" value="{{ old('email') }}">
+          @enderror" id="email" name="email" value="{{ old('email') }}">
           @error('email')
-            <div class="invalid-feedback">
-              {{ $message }}
-            </div>
+          <div class="invalid-feedback">
+            {{ $message }}
+          </div>
           @enderror
         </div>
         <div class="mb-3">
           <label for="pesan" class="form-label fw-bold">Pesan</label>
           <textarea class="form-control @error('pesan')
             is-invalid
-          @enderror" name="pesan"
-            id="pesan" rows="5">{{ old('pesan') }}</textarea>
+          @enderror" name="pesan" id="pesan" rows="5">{{ old('pesan') }}</textarea>
           @error('pesan')
-            <div class="invalid-feedback">
-              {{ $message }}
-            </div>
+          <div class="invalid-feedback">
+            {{ $message }}
+          </div>
           @enderror
         </div>
         <div class="mb-3 d-none" id="file_persyaratan_container">
           <label for="file_persyaratan" class="form-label fw-bold">File Persyaratan <sup class="text-danger">PDF |
               Maks. 1 MB*</sup></label>
-          <input type="file" class="form-control @error('file_persyaratan') is-invalid @enderror"
-            id="file_persyaratan" name="file_persyaratan">
+          <input type="file" class="form-control @error('file_persyaratan') is-invalid @enderror" id="file_persyaratan"
+            name="file_persyaratan">
           @error('file_persyaratan')
-            <div class="invalid-feedback">{{ $message }}</div>
+          <div class="invalid-feedback">{{ $message }}</div>
           @enderror
         </div>
         <input type="hidden" id="is_file_persyaratan_required" name="is_file_persyaratan_required" value="0">
@@ -241,25 +235,25 @@
   </div>
 </div>
 <script>
-      document.addEventListener('DOMContentLoaded', function() {
-      const buttonSend = document.getElementById('buttonSend');
-      const form = buttonSend.closest('form');
+  document.addEventListener('DOMContentLoaded', function() {
+    const buttonSend = document.getElementById('buttonSend');
+    const form = buttonSend.closest('form');
 
-      form.addEventListener('submit', function() {
-        buttonSend.disabled = true;
-        buttonSend.innerHTML =
-          '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Mengirim...';
-      });
+    form.addEventListener('submit', function() {
+      buttonSend.disabled = true;
+      buttonSend.innerHTML =
+        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Mengirim...';
     });
+  });
 
-    document.addEventListener('DOMContentLoaded', function() {
-      const buttonStatus = document.getElementById('buttonStatus');
-      const form = buttonStatus.closest('form');
+  document.addEventListener('DOMContentLoaded', function() {
+    const buttonStatus = document.getElementById('buttonStatus');
+    const form = buttonStatus.closest('form');
 
-      form.addEventListener('submit', function() {
-        buttonStatus.disabled = true;
-        buttonStatus.innerHTML =
-          '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Mengirim...';
-      });
+    form.addEventListener('submit', function() {
+      buttonStatus.disabled = true;
+      buttonStatus.innerHTML =
+        '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Mengirim...';
     });
+  });
 </script>
