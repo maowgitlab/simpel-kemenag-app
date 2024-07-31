@@ -36,6 +36,41 @@
   <link href="{{ asset('vendor/blog/css/main.css') }}" rel="stylesheet">
   <!-- Sweet Alert 2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@betahuhn/feedback-js/dist/feedback-js.min.js" data-feedback-opts='{ 
+      "id": "example", 
+      "endpoint": "TODO", 
+      "emailField": true,
+      "inputPlaceholder": "Ketikan feedback disini...",
+      "emailPlaceholder": "Alamat Email",
+      "title": "Feedback Aplikasi",
+      "failedTitle": "Oops, terjadi kesalahan",
+      "failedMessage": "Jika masalah masih berlanjut, silahkan coba lagi.",
+      "submitText": "Kirim",
+      "backText": "Kembali",
+      "success": "Maacih! ❤️",
+      "contactText": "Hubungi Saya",
+      "contactLink": "mailto:robianoor@gmail.com",
+      "typeMessage": "Feedback apa yang ingin disampaikan?",
+      "position": "left",
+      "primary": "green",
+      "background": "white",
+      "color": "black",
+      "types": {
+        "general": {
+          "text": "Feedback Umum",
+          "icon": "😁"
+        },
+        "idea": {
+          "text": "Saya punya saran",
+          "icon": "💡"
+        },
+        "bug": {
+          "text": "Saya menemukan bug",
+          "icon": "🐞"
+        }
+      }
+    }'>
+  </script>
 
   <style>
     .pagination>li>a,
@@ -77,15 +112,14 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a href="/"><span class="hover-nav">Beranda</span></a></li>
-          <li class="dropdown"><a href="#"><span>Media</span> <i
-                class="bi bi-chevron-down dropdown-indicator"></i></a>
+          <li class="dropdown"><a href="#"><span>Media</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               @forelse ($categories as $category)
-                <li><a href="{{ route('home', ['kategori' => $category->slug]) }}"><span
-                      class="hover-nav">{{ $category->nama_kategori }}</span></a>
-                </li>
+              <li><a href="{{ route('home', ['kategori' => $category->slug]) }}"><span class="hover-nav">{{
+                    $category->nama_kategori }}</span></a>
+              </li>
               @empty
-                <li class="text-center">Media belum tersedia.</li>
+              <li class="text-center">Media belum tersedia.</li>
               @endforelse
             </ul>
           </li>
@@ -126,49 +160,50 @@
   <main id="main">
 
     @if (
-        (!Request::has('cari') || (Request::has('cari') && !Request::input('cari'))) &&
-            !Request::has('media') &&
-            !Request::has('kategori') &&
-            !Request::has('layanan'))
-      <!-- ======= Hero Slider Section ======= -->
-      <section id="hero-slider" class="hero-slider">
-        <div class="container-md" data-aos="fade-in">
-          <div class="row">
-            <div class="col-12">
-              <div class="swiper sliderFeaturedPosts rounded">
-                <div class="swiper-wrapper">
-                  @forelse ($importantMedias as $important)
-                    <div class="swiper-slide">
-                      <div class="img-bg d-flex align-items-end"
-                        style="background-image: url({{ asset('storage/' . $important->gambar) }});">
-                        <div class="img-bg-inner">
-                          <h2 class="fw-bold"><a href="{{ route('home', ['media' => $important->slug]) }}"
-                              class="text-white">{{ $important->judul }}</a></h2>
-                          <span class="badge"
-                            style="background-color: #2C65E1;">{{ $important->category->nama_kategori }}</span>
-                          <p>{!! Str::limit(strip_tags(str_replace('PROJECT-KU.MY.ID -', '"', $important->konten)), 200, '...') !!}</p>
-                        </div>
-                      </div>
+    (!Request::has('cari') || (Request::has('cari') && !Request::input('cari'))) &&
+    !Request::has('media') &&
+    !Request::has('kategori') &&
+    !Request::has('layanan'))
+    <!-- ======= Hero Slider Section ======= -->
+    <section id="hero-slider" class="hero-slider">
+      <div class="container-md" data-aos="fade-in">
+        <div class="row">
+          <div class="col-12">
+            <div class="swiper sliderFeaturedPosts rounded">
+              <div class="swiper-wrapper">
+                @forelse ($importantMedias as $important)
+                <div class="swiper-slide">
+                  <div class="img-bg d-flex align-items-end"
+                    style="background-image: url({{ asset('storage/' . $important->gambar) }});">
+                    <div class="img-bg-inner">
+                      <h2 class="fw-bold"><a href="{{ route('home', ['media' => $important->slug]) }}"
+                          class="text-white">{{ $important->judul }}</a></h2>
+                      <span class="badge" style="background-color: #2C65E1;">{{ $important->category->nama_kategori
+                        }}</span>
+                      <p>{!! Str::limit(strip_tags(str_replace('PROJECT-KU.MY.ID -', '"', $important->konten)), 200,
+                        '...') !!}</p>
                     </div>
-                  @empty
-                    <h1 class="mx-auto">Belum Ada media Penting Nih</h1>
-                  @endforelse
+                  </div>
+                </div>
+                @empty
+                <h1 class="mx-auto">Belum Ada media Penting Nih</h1>
+                @endforelse
 
-                </div>
-                <div class="custom-swiper-button-next">
-                  <span class="bi-chevron-right"></span>
-                </div>
-                <div class="custom-swiper-button-prev">
-                  <span class="bi-chevron-left"></span>
-                </div>
-
-                <div class="swiper-pagination"></div>
               </div>
+              <div class="custom-swiper-button-next">
+                <span class="bi-chevron-right"></span>
+              </div>
+              <div class="custom-swiper-button-prev">
+                <span class="bi-chevron-left"></span>
+              </div>
+
+              <div class="swiper-pagination"></div>
             </div>
           </div>
         </div>
-      </section>
-      <!-- End Hero Slider Section -->
+      </div>
+    </section>
+    <!-- End Hero Slider Section -->
     @endif
 
     <!-- ======= Post Grid Section ======= -->
@@ -181,175 +216,174 @@
     <!-- End Post Grid Section -->
 
     @if (
-        (!Request::has('cari') || (Request::has('cari') && !Request::input('cari'))) &&
-            !Request::has('media') &&
-            !Request::has('kategori'))
-      @if ($trendingCategoriesOne && $trendingCategoriesOne->medias && count($trendingCategoriesOne->medias) >= 10)
-        @php
-          // Untuk Trending Kategori Pertama 10 Data Post
-          $mediaTrendingCategoriesOne = $trendingCategoriesOne->medias;
-        @endphp
-        <!-- ======= Trending Category One ======= -->
-        <section class="category-section">
-          <div class="container" data-aos="fade-up">
+    (!Request::has('cari') || (Request::has('cari') && !Request::input('cari'))) &&
+    !Request::has('media') &&
+    !Request::has('kategori'))
+    @if ($trendingCategoriesOne && $trendingCategoriesOne->medias && count($trendingCategoriesOne->medias) >= 10)
+    @php
+    // Untuk Trending Kategori Pertama 10 Data Post
+    $mediaTrendingCategoriesOne = $trendingCategoriesOne->medias;
+    @endphp
+    <!-- ======= Trending Category One ======= -->
+    <section class="category-section">
+      <div class="container" data-aos="fade-up">
 
-            <div class="section-header d-flex justify-content-between align-items-center mb-5">
-              <h3 class="fw-bold">{{ $trendingCategoriesOne->nama_kategori }}</h3>
-              <div><a href="{{ route('home', ['kategori' => $trendingCategoriesOne->slug]) }}" class="more">LIHAT
-                  SEMUA {{ $trendingCategoriesOne->nama_kategori }} <i class="bi bi-arrow-right"></i></a>
+        <div class="section-header d-flex justify-content-between align-items-center mb-5">
+          <h3 class="fw-bold">{{ $trendingCategoriesOne->nama_kategori }}</h3>
+          <div><a href="{{ route('home', ['kategori' => $trendingCategoriesOne->slug]) }}" class="more">LIHAT
+              SEMUA {{ $trendingCategoriesOne->nama_kategori }} <i class="bi bi-arrow-right"></i></a>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-9">
+            <div class="d-lg-flex post-entry-2">
+              <a href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[0]->slug]) }}"
+                class="me-4 thumbnail mb-4 mb-lg-0 d-inline-block">
+                <figure class="m-0">
+                  <img src="{{ asset('storage/' . $mediaTrendingCategoriesOne[0]->gambar) }}" alt=""
+                    class="img-fluid rounded" loading="lazy">
+                </figure>
+              </a>
+              <div>
+                <div class="post-meta"><span class="badge" style="background-color: #2C65E1;"><a
+                      href="{{ route('home', ['kategori' => $mediaTrendingCategoriesOne[0]->category->slug]) }}"
+                      class="text-white">{{ $trendingCategoriesOne->nama_kategori }}</a></span>
+                  <span class="mx-1">&bullet;</span>
+                  <span>{{ $mediaTrendingCategoriesOne[0]->created_at->translatedFormat('l, d F Y H:i') . ' ' }} |
+                    <i class="bi bi-eye-fill"></i>
+                    {{ $mediaTrendingCategoriesOne[0]->jumlah_dibaca . ' Kali' }}</span>
+                </div>
+                <h3 class="fw-bold"><a href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[0]->slug]) }}"
+                    class="hover-title">{{ $mediaTrendingCategoriesOne[0]->judul }}</a>
+                </h3>
+                <article class="mb-4">{!! Str::limit(
+                  strip_tags(str_replace('PROJECT-KU.MY.ID -', '"', $mediaTrendingCategoriesOne[0]->konten)),
+                  200,
+                  '...',
+                  ) !!}</article>
+                <div class="d-flex align-items-center author">
+                  <div class="photo"><img
+                      src="{{ $mediaTrendingCategoriesOne[0]->user->userDetail->profil == 'profil.png' ? asset('profil.png') : asset('storage/' . $mediaTrendingCategoriesOne[0]->user->userDetail->profil) }}"
+                      alt="" class="img-fluid" loading="lazy"></div>
+                  <div class="name">
+                    <h3 class="m-0 p-0">
+                      {{ $mediaTrendingCategoriesOne[0]->user->userDetail->nama_lengkap ??
+                      $mediaTrendingCategoriesOne[0]->user->username }}
+                    </h3>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div class="row">
-              <div class="col-md-9">
-                <div class="d-lg-flex post-entry-2">
-                  <a href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[0]->slug]) }}"
-                    class="me-4 thumbnail mb-4 mb-lg-0 d-inline-block">
+              <div class="col-lg-4">
+                <div class="post-entry-1 border-bottom">
+                  <a href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[1]->slug]) }}">
                     <figure class="m-0">
-                      <img src="{{ asset('storage/' . $mediaTrendingCategoriesOne[0]->gambar) }}" alt=""
-                        class="img-fluid rounded" loading="lazy">
+                      <a href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[1]->slug]) }}"> <img
+                          src="{{ asset('storage/' . $mediaTrendingCategoriesOne[1]->gambar) }}" alt=""
+                          class="img-fluid rounded" loading="lazy">
+                        <a href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[1]->slug]) }}">
                     </figure>
                   </a>
-                  <div>
-                    <div class="post-meta"><span class="badge" style="background-color: #2C65E1;"><a
-                          href="{{ route('home', ['kategori' => $mediaTrendingCategoriesOne[0]->category->slug]) }}"
-                          class="text-white">{{ $trendingCategoriesOne->nama_kategori }}</a></span>
-                      <span class="mx-1">&bullet;</span>
-                      <span>{{ $mediaTrendingCategoriesOne[0]->created_at->translatedFormat('l, d F Y H:i') . ' ' }} |
-                        <i class="bi bi-eye-fill"></i>
-                        {{ $mediaTrendingCategoriesOne[0]->jumlah_dibaca . ' Kali' }}</span>
-                    </div>
-                    <h3 class="fw-bold"><a
-                        href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[0]->slug]) }}"
-                        class="hover-title">{{ $mediaTrendingCategoriesOne[0]->judul }}</a>
-                    </h3>
-                    <article class="mb-4">{!! Str::limit(
-                        strip_tags(str_replace('PROJECT-KU.MY.ID -', '"', $mediaTrendingCategoriesOne[0]->konten)),
-                        200,
-                        '...',
-                    ) !!}</article>
-                    <div class="d-flex align-items-center author">
-                      <div class="photo"><img
-                          src="{{ $mediaTrendingCategoriesOne[0]->user->userDetail->profil == 'profil.png' ? asset('profil.png') : asset('storage/' . $mediaTrendingCategoriesOne[0]->user->userDetail->profil) }}"
-                          alt="" class="img-fluid" loading="lazy"></div>
-                      <div class="name">
-                        <h3 class="m-0 p-0">
-                          {{ $mediaTrendingCategoriesOne[0]->user->userDetail->nama_lengkap ?? $mediaTrendingCategoriesOne[0]->user->username }}
-                        </h3>
-                      </div>
-                    </div>
+                  <div class="post-meta"><span class="badge" style="background-color: #2C65E1;"><a
+                        href="{{ route('home', ['kategori' => $mediaTrendingCategoriesOne[1]->category->slug]) }}"
+                        class="text-white">{{ $trendingCategoriesOne->nama_kategori }}</a></span>
+                    <span class="mx-1">&bullet;</span>
+                    <span>{{ $mediaTrendingCategoriesOne[1]->created_at->translatedFormat('l, d F Y H:i') . ' ' }}
+                      | <i class="bi bi-eye-fill"></i>
+                      {{ $mediaTrendingCategoriesOne[1]->jumlah_dibaca . ' Kali' }}</span>
                   </div>
+                  <h5 class="mb-2 fw-bold"><a
+                      href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[1]->slug]) }}"
+                      class="hover-title">{{ $mediaTrendingCategoriesOne[1]->judul }}</a>
+                  </h5>
+                  <span class="author mb-3 d-block">{{ $mediaTrendingCategoriesOne[1]->user->userDetail->nama_lengkap ??
+                    $mediaTrendingCategoriesOne[1]->user->username }}</span>
+                  <article class="mb-4">
+                    {!! Str::limit(
+                    strip_tags(str_replace('PROJECT-KU.MY.ID -', '"', $mediaTrendingCategoriesOne[1]->konten)),
+                    200,
+                    '...',
+                    ) !!}</article>
                 </div>
 
-                <div class="row">
-                  <div class="col-lg-4">
-                    <div class="post-entry-1 border-bottom">
-                      <a href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[1]->slug]) }}">
-                        <figure class="m-0">
-                          <a href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[1]->slug]) }}"> <img
-                              src="{{ asset('storage/' . $mediaTrendingCategoriesOne[1]->gambar) }}" alt=""
-                              class="img-fluid rounded" loading="lazy">
-                            <a href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[1]->slug]) }}">
-                        </figure>
-                      </a>
-                      <div class="post-meta"><span class="badge" style="background-color: #2C65E1;"><a
-                            href="{{ route('home', ['kategori' => $mediaTrendingCategoriesOne[1]->category->slug]) }}"
-                            class="text-white">{{ $trendingCategoriesOne->nama_kategori }}</a></span>
-                        <span class="mx-1">&bullet;</span>
-                        <span>{{ $mediaTrendingCategoriesOne[1]->created_at->translatedFormat('l, d F Y H:i') . ' ' }}
-                          | <i class="bi bi-eye-fill"></i>
-                          {{ $mediaTrendingCategoriesOne[1]->jumlah_dibaca . ' Kali' }}</span>
-                      </div>
-                      <h5 class="mb-2 fw-bold"><a
-                          href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[1]->slug]) }}"
-                          class="hover-title">{{ $mediaTrendingCategoriesOne[1]->judul }}</a>
-                      </h5>
-                      <span
-                        class="author mb-3 d-block">{{ $mediaTrendingCategoriesOne[1]->user->userDetail->nama_lengkap ?? $mediaTrendingCategoriesOne[1]->user->username }}</span>
-                      <article class="mb-4">
-                        {!! Str::limit(
-                            strip_tags(str_replace('PROJECT-KU.MY.ID -', '"', $mediaTrendingCategoriesOne[1]->konten)),
-                            200,
-                            '...',
-                        ) !!}</article>
-                    </div>
-
-                    <div class="post-entry-1">
-                      <div class="post-meta"><span class="badge" style="background-color: #2C65E1;"><a
-                            href="{{ route('home', ['kategori' => $mediaTrendingCategoriesOne[2]->category->slug]) }}"
-                            class="text-white">{{ $trendingCategoriesOne->nama_kategori }}</a></span>
-                        <span class="mx-1">&bullet;</span>
-                        <span>{{ $mediaTrendingCategoriesOne[2]->created_at->translatedFormat('l, d F Y H:i') . ' ' }}
-                          | <i class="bi bi-eye-fill"></i>
-                          {{ $mediaTrendingCategoriesOne[2]->jumlah_dibaca . ' Kali' }}</span>
-                      </div>
-                      <h5 class="mb-2 fw-bold"><a
-                          href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[2]->slug]) }}"
-                          class="hover-title">{{ $mediaTrendingCategoriesOne[2]->judul }}</a>
-                      </h5>
-                      <span
-                        class="author mb-3 d-block">{{ $mediaTrendingCategoriesOne[2]->user->userDetail->nama_lengkap ?? $mediaTrendingCategoriesOne[2]->user->username }}</span>
-                    </div>
+                <div class="post-entry-1">
+                  <div class="post-meta"><span class="badge" style="background-color: #2C65E1;"><a
+                        href="{{ route('home', ['kategori' => $mediaTrendingCategoriesOne[2]->category->slug]) }}"
+                        class="text-white">{{ $trendingCategoriesOne->nama_kategori }}</a></span>
+                    <span class="mx-1">&bullet;</span>
+                    <span>{{ $mediaTrendingCategoriesOne[2]->created_at->translatedFormat('l, d F Y H:i') . ' ' }}
+                      | <i class="bi bi-eye-fill"></i>
+                      {{ $mediaTrendingCategoriesOne[2]->jumlah_dibaca . ' Kali' }}</span>
                   </div>
-                  <div class="col-lg-8">
-                    <div class="post-entry-1">
-                      <a href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[3]->slug]) }}">
-                        <figure class="m-0">
-                          <a href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[3]->slug]) }}"> <img
-                              src="{{ asset('storage/' . $mediaTrendingCategoriesOne[3]->gambar) }}" alt=""
-                              class="img-fluid rounded" loading="lazy">
-                            <a href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[3]->slug]) }}">
-                        </figure>
-                      </a>
-                      <div class="post-meta"><span class="badge" style="background-color: #2C65E1;"><a
-                            href="{{ route('home', ['kategori' => $mediaTrendingCategoriesOne[3]->category->slug]) }}"
-                            class="text-white">{{ $trendingCategoriesOne->nama_kategori }}</a></span>
-                        <span class="mx-1">&bullet;</span>
-                        <span>{{ $mediaTrendingCategoriesOne[3]->created_at->translatedFormat('l, d F Y H:i') . ' ' }}
-                          | <i class="bi bi-eye-fill"></i>
-                          {{ $mediaTrendingCategoriesOne[3]->jumlah_dibaca . ' Kali' }}</span>
-                      </div>
-                      <h5 class="mb-2 fw-bold"><a
-                          href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[3]->slug]) }}"
-                          class="hover-title">{{ $mediaTrendingCategoriesOne[3]->judul }}</a>
-                      </h5>
-                      <span
-                        class="author mb-3 d-block">{{ $mediaTrendingCategoriesOne[3]->user->userDetail->nama_lengkap ?? $mediaTrendingCategoriesOne[3]->user->username }}</span>
-                      <article class="mb-4">
-                        {!! Str::limit(
-                            strip_tags(str_replace('PROJECT-KU.MY.ID -', '"', $mediaTrendingCategoriesOne[3]->konten)),
-                            200,
-                            '...',
-                        ) !!}</article>
-                    </div>
-                  </div>
+                  <h5 class="mb-2 fw-bold"><a
+                      href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[2]->slug]) }}"
+                      class="hover-title">{{ $mediaTrendingCategoriesOne[2]->judul }}</a>
+                  </h5>
+                  <span class="author mb-3 d-block">{{ $mediaTrendingCategoriesOne[2]->user->userDetail->nama_lengkap ??
+                    $mediaTrendingCategoriesOne[2]->user->username }}</span>
                 </div>
               </div>
-              <div class="col-md-3">
-                @foreach ($mediaTrendingCategoriesOne as $index => $media)
-                  @if ($index >= 4 && $index <= 9)
-                    <div class="post-entry-1 border-bottom">
-                      <div class="post-meta"><span class="badge" style="background-color: #2C65E1;"><a
-                            href="{{ route('home', ['kategori' => $media->category->slug]) }}"
-                            class="text-white">{{ $trendingCategoriesOne->nama_kategori }}</a></span>
-                        <span class="mx-1">&bullet;</span>
-                        <span>{{ $media->created_at->translatedFormat('l, d F Y H:i') . ' ' }} |
-                          <i class="bi bi-eye-fill"></i> {{ $media->jumlah_dibaca . ' Kali' }}</span>
-                      </div>
-                      <h5 class="mb-2 fw-bold"><a href="{{ route('home', ['media' => $media->slug]) }}"
-                          class="hover-title">{{ $media->judul }}</a>
-                      </h5>
-                      <span
-                        class="author mb-3 d-block">{{ $media->user->userDetail->nama_lengkap ?? $media->user->username }}</span>
-                    </div>
-                  @endif
-                @endforeach
+              <div class="col-lg-8">
+                <div class="post-entry-1">
+                  <a href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[3]->slug]) }}">
+                    <figure class="m-0">
+                      <a href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[3]->slug]) }}"> <img
+                          src="{{ asset('storage/' . $mediaTrendingCategoriesOne[3]->gambar) }}" alt=""
+                          class="img-fluid rounded" loading="lazy">
+                        <a href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[3]->slug]) }}">
+                    </figure>
+                  </a>
+                  <div class="post-meta"><span class="badge" style="background-color: #2C65E1;"><a
+                        href="{{ route('home', ['kategori' => $mediaTrendingCategoriesOne[3]->category->slug]) }}"
+                        class="text-white">{{ $trendingCategoriesOne->nama_kategori }}</a></span>
+                    <span class="mx-1">&bullet;</span>
+                    <span>{{ $mediaTrendingCategoriesOne[3]->created_at->translatedFormat('l, d F Y H:i') . ' ' }}
+                      | <i class="bi bi-eye-fill"></i>
+                      {{ $mediaTrendingCategoriesOne[3]->jumlah_dibaca . ' Kali' }}</span>
+                  </div>
+                  <h5 class="mb-2 fw-bold"><a
+                      href="{{ route('home', ['media' => $mediaTrendingCategoriesOne[3]->slug]) }}"
+                      class="hover-title">{{ $mediaTrendingCategoriesOne[3]->judul }}</a>
+                  </h5>
+                  <span class="author mb-3 d-block">{{ $mediaTrendingCategoriesOne[3]->user->userDetail->nama_lengkap ??
+                    $mediaTrendingCategoriesOne[3]->user->username }}</span>
+                  <article class="mb-4">
+                    {!! Str::limit(
+                    strip_tags(str_replace('PROJECT-KU.MY.ID -', '"', $mediaTrendingCategoriesOne[3]->konten)),
+                    200,
+                    '...',
+                    ) !!}</article>
+                </div>
               </div>
             </div>
           </div>
-        </section>
-        <!-- End Trending Category One -->
-      @endif
+          <div class="col-md-3">
+            @foreach ($mediaTrendingCategoriesOne as $index => $media)
+            @if ($index >= 4 && $index <= 9) <div class="post-entry-1 border-bottom">
+              <div class="post-meta"><span class="badge" style="background-color: #2C65E1;"><a
+                    href="{{ route('home', ['kategori' => $media->category->slug]) }}" class="text-white">{{
+                    $trendingCategoriesOne->nama_kategori }}</a></span>
+                <span class="mx-1">&bullet;</span>
+                <span>{{ $media->created_at->translatedFormat('l, d F Y H:i') . ' ' }} |
+                  <i class="bi bi-eye-fill"></i> {{ $media->jumlah_dibaca . ' Kali' }}</span>
+              </div>
+              <h5 class="mb-2 fw-bold"><a href="{{ route('home', ['media' => $media->slug]) }}" class="hover-title">{{
+                  $media->judul }}</a>
+              </h5>
+              <span class="author mb-3 d-block">{{ $media->user->userDetail->nama_lengkap ?? $media->user->username
+                }}</span>
+          </div>
+          @endif
+          @endforeach
+        </div>
+      </div>
+      </div>
+    </section>
+    <!-- End Trending Category One -->
+    @endif
     @endif
   </main>
   <!-- End #main -->
@@ -373,19 +407,19 @@
             <h3 class="footer-heading">Navigasi</h3>
             <ul class="footer-links list-unstyled">
               <li><a href="{{ route('home') }}"><i class="bi bi-chevron-right"></i> Beranda</a></li>
-              <li><a href="{{ route('home', ['layanan' => 'pelayanan-publik']) }}"><i
-                    class="bi bi-chevron-right"></i> Pelayanan Publik</a></li>
+              <li><a href="{{ route('home', ['layanan' => 'pelayanan-publik']) }}"><i class="bi bi-chevron-right"></i>
+                  Pelayanan Publik</a></li>
             </ul>
           </div>
           <div class="col-6 col-lg-2">
             <h3 class="footer-heading">Media</h3>
             <ul class="footer-links list-unstyled">
               @forelse ($categories as $category)
-                <li><a href="{{ route('home', ['kategori' => $category->slug]) }}"><i
-                      class="bi bi-chevron-right"></i> {{ $category->nama_kategori }}</a>
-                </li>
+              <li><a href="{{ route('home', ['kategori' => $category->slug]) }}"><i class="bi bi-chevron-right"></i> {{
+                  $category->nama_kategori }}</a>
+              </li>
               @empty
-                <li>Media Tidak Tersedia</li>
+              <li>Media Tidak Tersedia</li>
               @endforelse
             </ul>
           </div>
@@ -395,22 +429,22 @@
 
             <ul class="footer-links footer-blog-entry list-unstyled">
               @forelse ($latestMedias->take(4) as $media)
-                <li>
-                  <a href="{{ route('home', ['media' => $media->slug]) }}" class="d-flex align-items-center">
-                    <img src="{{ asset('storage/' . $media->gambar) }}" alt=""
-                      class="img-fluid me-2 rounded" loading="lazy" style="height: 40px;">
-                    <div>
-                      <div class="post-meta"><span
-                          class="date"><u><strong>{{ $media->category->nama_kategori }}</u></strong></span>
-                        <span class="mx-1">&bullet;</span>
-                        <span>{{ $media->created_at->translatedFormat('l, d F Y H:i') . ' ' }}
-                      </div>
-                      <span class="small fw-bold">{{ $media->judul }}</span>
+              <li>
+                <a href="{{ route('home', ['media' => $media->slug]) }}" class="d-flex align-items-center">
+                  <img src="{{ asset('storage/' . $media->gambar) }}" alt="" class="img-fluid me-2 rounded"
+                    loading="lazy" style="height: 40px;">
+                  <div>
+                    <div class="post-meta"><span class="date"><u><strong>{{ $media->category->nama_kategori
+                            }}</u></strong></span>
+                      <span class="mx-1">&bullet;</span>
+                      <span>{{ $media->created_at->translatedFormat('l, d F Y H:i') . ' ' }}
                     </div>
-                  </a>
-                </li>
+                    <span class="small fw-bold">{{ $media->judul }}</span>
+                  </div>
+                </a>
+              </li>
               @empty
-                <li>Belum ada postigan</li>
+              <li>Belum ada postigan</li>
               @endforelse
             </ul>
           </div>
