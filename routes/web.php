@@ -34,6 +34,7 @@ Route::post('/buat-permohonan-baru', [BlogController::class, 'createNewApplicant
 Route::post('/kirim-komentar', [BlogController::class, 'sendComment'])->middleware('throttle.comments')->name('sendComment');
 Route::get('/unique-id', [BlogController::class, 'setUniqueID'])->name('setUniqueID');
 Route::get('/laporkan-komentar/{id}', [BlogController::class, 'reportComment'])->name('reportComment');
+Route::post('/feedback', [BlogController::class, 'feedback'])->name('feedback');
 
 
 Route::middleware('auth', 'role:admin', 'status:aktif')->group(function () {

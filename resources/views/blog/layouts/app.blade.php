@@ -8,6 +8,7 @@
   <title>@yield('title')</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
+  <meta name="csrf-token" content="{{ csrf_token() }}">
 
   <!-- Favicons -->
   <link href="{{ asset('kemenag_logo.png') }}" rel="icon">
@@ -37,8 +38,8 @@
   <!-- Sweet Alert 2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/@betahuhn/feedback-js/dist/feedback-js.min.js" data-feedback-opts='{ 
-      "id": "example", 
-      "endpoint": "TODO", 
+      "id": "feedback", 
+      "endpoint": "{{ route('feedback') }}", 
       "emailField": true,
       "inputPlaceholder": "Ketikan feedback disini...",
       "emailPlaceholder": "Alamat Email",
@@ -47,7 +48,7 @@
       "failedMessage": "Jika masalah masih berlanjut, silahkan coba lagi.",
       "submitText": "Kirim",
       "backText": "Kembali",
-      "success": "Maacih! ❤️",
+      "success": "Terkirim!",
       "contactText": "Hubungi Saya",
       "contactLink": "mailto:robianoor@gmail.com",
       "typeMessage": "Feedback apa yang ingin disampaikan?",
@@ -55,6 +56,7 @@
       "primary": "green",
       "background": "white",
       "color": "black",
+      "events": true,
       "types": {
         "general": {
           "text": "Feedback Umum",
@@ -70,6 +72,16 @@
         }
       }
     }'>
+  </script>
+
+  <script>
+    window.addEventListener('feedback-submit', (event) => {
+        const email = event.detail.email;
+        const pesan = event.detail.message;
+        if (email == "" || pesan == "") {
+          alert("Email dan pesan wajib diisi.");
+        }
+    })
   </script>
 
   <style>

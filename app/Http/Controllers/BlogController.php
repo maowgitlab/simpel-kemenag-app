@@ -286,4 +286,21 @@ class BlogController extends Controller
         $comment->update(['spam' => 1]);
         return back()->with('message', $this->generateSuccessMessage('Komentar berhasil di laporkan.'));
     }
+
+    public function feedback(Request $request)
+    {
+        $validated = $request->validate([
+            'message' => 'required|string',
+            'email' => 'required|email',
+        ]);
+
+        \App\Models\Feedback::create([
+            'email' => $validated['email'],
+            'tipe_feedback' => $request->post('feedbackType'),
+            'url' => $request->post('url'),
+            'pesan' => $validated['message'],
+        ]);
+
+        return response()->json(['message' => 'Feedback submitted successfully.'], 200);
+    }
 }
